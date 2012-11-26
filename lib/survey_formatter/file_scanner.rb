@@ -30,12 +30,17 @@ module SurveyFormatter
     end
 
     def comment_out_dependency_rules(line)
-      line.gsub!("dep", "#dep") if line =~ /dependency :rule=>/
+      unless line =~ /#dependency :rule=>/ || line =~ /#dependency :rule =>/
+        line.gsub!("dep", "#dep") if line =~ /dependency :rule=>/
+        line.gsub!("dep", "#dep") if line =~ /dependency :rule =>/
+      end
       line
     end
 
     def comment_out_conditions(line)
-      line.gsub!("con", "#con") if line =~ /condition_[A-Z]/
+      unless line =~ /#condition_[A-Z]/
+        line.gsub!("con", "#con") if line =~ /condition_[A-Z]/
+      end
       line
     end
 
